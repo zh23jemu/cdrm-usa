@@ -36,7 +36,7 @@
 
 ## Current Status
 
-已完成 Slurm GPU 全量实验，结果、日志和 checkpoint 已通过 Git 同步回本地仓库，并已补充离线结果绘图脚本生成新图。
+已完成 Slurm GPU 全量实验，结果、日志和 checkpoint 已通过 Git 同步回本地仓库，并已生成面向用户交付的结果压缩包。
 
 ## Recent Changes
 
@@ -48,12 +48,14 @@
 - 新增 `scripts/run_all_slurm.sbatch`，用于在 Slurm 上运行完整 `run_all.py` 实验。
 - 在 Slurm GPU 节点完成 `run_all.py` 全量实验，并同步 `results/all_methods.json`、`results/logs/` 和 `results/ckpts/`。
 - 新增 `tools/plot_results.py`，基于 `results/all_methods.json` 生成 `fig21` 到 `fig24` 的结果汇总图。
+- 新增本地交付打包忽略规则，避免 `deliverables/` 中的压缩包误入库。
 
 ## Next TODO
 
 - 进一步检查 `README.md` 的运行命令，必要时改为项目 `.venv` 形式。
 - 检查 GitHub 仓库页面、默认分支和大文件展示是否正常。
 - 进一步检查 `tools/plot_results.py` 是否需要接入 Slurm `run_all` 脚本，实现训练结束后自动绘图。
+- 根据用户反馈决定是否提供轻量版交付包，仅包含图表和 JSON，不包含 checkpoint。
 
 ## Open Issues
 

@@ -23,6 +23,9 @@ results/logs/
 slurm-*.out
 *.log
 
+# 面向用户交付的本地打包产物
+deliverables/
+
 # 编辑器与系统文件
 .idea/
 .vscode/
