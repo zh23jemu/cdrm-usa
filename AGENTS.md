@@ -16,6 +16,7 @@
 
 - `train.py`：单次实验入口，负责读取配置、构建数据、模型、优化器、调度器、训练循环、验证和目标域评估。
 - `run_all.py`：批量运行多方法、多源负载、多随机种子的实验，并聚合目标域指标。
+- `scripts/`：提供单次训练和全量实验的 Slurm 提交脚本，默认从 `SLURM_SUBMIT_DIR` 回到提交目录运行。
 - `configs/default.yaml`：数据窗口、STFT、训练超参、CDRM/USA 和 baseline 参数的默认配置。
 - `data/`：CWRU 文件解析、滑窗切片、归一化、伪工况标签生成和 DataLoader 构建。
 - `models/`：1D/2D backbone、CDRM、USA、组合模型和多种 baseline。
@@ -34,7 +35,7 @@
 
 ## Current Status
 
-已完成项目 Git 初始化、初版提交，并已发布到 GitHub Public 仓库 `zh23jemu/cdrm-usa`。
+已完成项目 GitHub Public 发布，并修复 Slurm 脚本在计算节点上错误使用 spool 路径导致输出目录无权限的问题。
 
 ## Recent Changes
 
@@ -42,13 +43,15 @@
 - 新增 `.gitignore`，忽略本地虚拟环境、Python 缓存、训练 checkpoint、训练日志、Slurm 输出和编辑器/系统文件。
 - 新增 Slurm 训练脚本，便于在集群上运行默认 CDRM-USA 训练。
 - 已创建 GitHub Public 仓库 `zh23jemu/cdrm-usa`，并推送当前 `master` 分支。
+- 修复 `scripts/train_slurm.sbatch` 的工作目录逻辑，改为从 `SLURM_SUBMIT_DIR` 进入提交目录。
+- 新增 `scripts/run_all_slurm.sbatch`，用于在 Slurm 上运行完整 `run_all.py` 实验。
 
 ## Next TODO
 
 - 创建 `.venv` 并安装依赖后，执行一次短 epoch smoke test，确认数据路径、模型前向和训练循环可用。
-- 根据实际实验需求决定是否补充多方法批量 Slurm 脚本。
 - 进一步检查 `README.md` 的运行命令，必要时改为项目 `.venv` 形式。
 - 检查 GitHub 仓库页面、默认分支和大文件展示是否正常。
+- 在服务器执行 `git pull` 后，用 `EPOCHS=1 sbatch scripts/train_slurm.sbatch` 重新验证训练任务。
 
 ## Open Issues
 

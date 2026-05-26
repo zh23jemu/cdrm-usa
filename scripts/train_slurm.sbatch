@@ -19,8 +19,9 @@
 
 set -euo pipefail
 
-# 始终从项目根目录运行，确保配置文件、数据目录和输出目录路径一致。
-cd "$(dirname "$0")/.."
+# 始终从 sbatch 提交时所在的项目根目录运行。
+# 注意：Slurm 会把脚本复制到作业 spool 目录执行，不能依赖 "$0" 推断仓库路径。
+cd "${SLURM_SUBMIT_DIR:-$(pwd)}"
 
 # Slurm 不会自动创建日志目录；这里创建的是运行态目录，不属于源码内容。
 mkdir -p results/logs results/ckpts
