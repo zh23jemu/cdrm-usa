@@ -34,19 +34,21 @@
 
 ## Current Status
 
-已完成项目 Git 初始化前的结构梳理，确认这是一个包含数据、训练代码、baseline、结果图和可视化工具的 PyTorch 研究项目。
+已完成项目 Git 初始化与初版提交，准备发布到 GitHub Public 仓库 `zh23jemu/cdrm-usa`。
 
 ## Recent Changes
 
 - 新增项目级维护记录，记录项目目标、技术栈、架构和维护约束。
 - 新增 `.gitignore`，忽略本地虚拟环境、Python 缓存、训练 checkpoint、训练日志、Slurm 输出和编辑器/系统文件。
 - 新增 Slurm 训练脚本，便于在集群上运行默认 CDRM-USA 训练。
+- 计划创建 GitHub Public 仓库并推送当前初版代码。
 
 ## Next TODO
 
 - 创建 `.venv` 并安装依赖后，执行一次短 epoch smoke test，确认数据路径、模型前向和训练循环可用。
 - 根据实际实验需求决定是否补充多方法批量 Slurm 脚本。
 - 进一步检查 `README.md` 的运行命令，必要时改为项目 `.venv` 形式。
+- 推送完成后检查 GitHub 仓库页面、默认分支和大文件展示是否正常。
 
 ## Open Issues
 
