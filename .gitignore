@@ -1,0 +1,30 @@
+# Python 缓存与虚拟环境
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# 本地环境与敏感配置
+.env
+.env.*
+!.env.example
+
+# 训练运行态产物：保留 results/figs 下的小型论文图，忽略可再生成的大体量训练输出
+results/ckpts/
+results/logs/
+*.pt
+*.pth
+*.ckpt
+
+# Slurm 与本地运行日志
+slurm-*.out
+*.log
+
+# 编辑器与系统文件
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

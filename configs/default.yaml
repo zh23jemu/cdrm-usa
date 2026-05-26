@@ -1,0 +1,94 @@
+data:
+  root: CRWU
+  section: 12k Drive End Bearing Fault Data
+  window_size: 1024
+  stride: 256
+  fs: 12000
+  normalize: zscore
+  classes:
+    - NM
+    - B007
+    - B014
+    - B021
+    - IR007
+    - IR014
+    - IR021
+    - OR007
+    - OR014
+    - OR021
+  loads: [0, 1, 2, 3]
+  rpm_map:
+    0: 1797
+    1: 1772
+    2: 1750
+    3: 1730
+  val_ratio: 0.2
+  num_workers: 0
+  pseudo_condition:
+    enable: true
+    n_clusters: 4
+    method: spectral_kmeans
+
+stft:
+  n_fft: 256
+  hop_length: 32
+  win_length: 256
+  power: 1.0
+  log: true
+
+train:
+  seed: 2026
+  epochs: 60
+  batch_size: 128
+  optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0005
+  scheduler: cosine
+  warmup_epochs: 3
+  device: auto
+  amp: false
+  ckpt_dir: results/ckpts
+  log_dir: results/logs
+
+model:
+  backbone: resnet1d
+  feat_dim: 256
+  num_classes: 10
+
+cdrm:
+  enable: true
+  proj_dim: 128
+  lambda_grl: 1.0
+  lambda_cond: 0.5
+  grl_warmup_epochs: 5
+
+usa:
+  enable: true
+  tf_channels: 64
+  attn_heads: 4
+  attn_topk_ratio: 0.5
+  lambda_consistency: 1.0
+  lambda_sparsity: 0.01
+  high_unc_quantile: 0.7
+  perturb:
+    band_mask_ratio: 0.3
+    time_drop_ratio: 0.2
+    spectrum_perturb_std: 0.15
+
+baseline:
+  method: erm
+  irm_penalty: 1.0
+  fishr_penalty: 1000.0
+  sagm_rho: 0.05
+  sagm_alpha: 0.0005
+  pcl_temperature: 0.1
+  mixstyle_p: 0.5
+  dsu_p: 0.5
+  efdmix_p: 0.5
+  efdmix_alpha: 0.1
+  rsc_drop_f: 0.33
+  rsc_drop_b: 0.33
+
+eval:
+  metric: macro_f1
+  save_best: true
