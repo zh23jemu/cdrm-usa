@@ -22,6 +22,7 @@
 - `models/`：1D/2D backbone、CDRM、USA、组合模型和多种 baseline。
 - `utils/`：随机种子、日志、损失函数和指标工具。
 - `tools/visualize.py`：从 checkpoint 提取特征，生成 t-SNE 和混淆矩阵图。
+- `tools/plot_results.py`：读取 `results/all_methods.json`，离线生成方法对比、源负载热力图和逐类准确率图。
 - `CRWU/`：当前仓库内置的 CWRU 原始 `.mat` 数据。
 - `results/figs/`：当前保留的小型结果图片，用于论文、报告或复现实验展示。
 
@@ -35,7 +36,7 @@
 
 ## Current Status
 
-已完成 Slurm GPU 全量实验，结果、日志和 checkpoint 已通过 Git 同步回本地仓库。
+已完成 Slurm GPU 全量实验，结果、日志和 checkpoint 已通过 Git 同步回本地仓库，并已补充离线结果绘图脚本生成新图。
 
 ## Recent Changes
 
@@ -46,12 +47,13 @@
 - 修复 `scripts/train_slurm.sbatch` 的工作目录逻辑，改为从 `SLURM_SUBMIT_DIR` 进入提交目录。
 - 新增 `scripts/run_all_slurm.sbatch`，用于在 Slurm 上运行完整 `run_all.py` 实验。
 - 在 Slurm GPU 节点完成 `run_all.py` 全量实验，并同步 `results/all_methods.json`、`results/logs/` 和 `results/ckpts/`。
+- 新增 `tools/plot_results.py`，基于 `results/all_methods.json` 生成 `fig21` 到 `fig24` 的结果汇总图。
 
 ## Next TODO
 
 - 进一步检查 `README.md` 的运行命令，必要时改为项目 `.venv` 形式。
 - 检查 GitHub 仓库页面、默认分支和大文件展示是否正常。
-- 分析 `results/all_methods.json`，整理方法排名、跨源负载均值和可视化报告。
+- 进一步检查 `tools/plot_results.py` 是否需要接入 Slurm `run_all` 脚本，实现训练结束后自动绘图。
 
 ## Open Issues
 
