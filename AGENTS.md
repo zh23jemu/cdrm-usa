@@ -35,7 +35,7 @@
 
 ## Current Status
 
-已完成项目 GitHub Public 发布，并修复 Slurm 脚本在计算节点上错误使用 spool 路径导致输出目录无权限的问题。
+已完成 Slurm GPU 全量实验，结果、日志和 checkpoint 已通过 Git 同步回本地仓库。
 
 ## Recent Changes
 
@@ -45,22 +45,21 @@
 - 已创建 GitHub Public 仓库 `zh23jemu/cdrm-usa`，并推送当前 `master` 分支。
 - 修复 `scripts/train_slurm.sbatch` 的工作目录逻辑，改为从 `SLURM_SUBMIT_DIR` 进入提交目录。
 - 新增 `scripts/run_all_slurm.sbatch`，用于在 Slurm 上运行完整 `run_all.py` 实验。
+- 在 Slurm GPU 节点完成 `run_all.py` 全量实验，并同步 `results/all_methods.json`、`results/logs/` 和 `results/ckpts/`。
 
 ## Next TODO
 
-- 创建 `.venv` 并安装依赖后，执行一次短 epoch smoke test，确认数据路径、模型前向和训练循环可用。
 - 进一步检查 `README.md` 的运行命令，必要时改为项目 `.venv` 形式。
 - 检查 GitHub 仓库页面、默认分支和大文件展示是否正常。
-- 在服务器执行 `git pull` 后，用 `EPOCHS=1 sbatch scripts/train_slurm.sbatch` 重新验证训练任务。
+- 分析 `results/all_methods.json`，整理方法排名、跨源负载均值和可视化报告。
 
 ## Open Issues
 
-- 当前尚未实际跑通训练；完整训练可能耗时较长，应优先在 GPU/Slurm 环境中验证。
-- `CRWU/` 数据约 658MB，初版提交会包含数据集，远端仓库如有体积限制可能需要后续改用外部数据下载说明或 Git LFS。
+- `CRWU/` 数据和 checkpoint 已进入 Git 历史，远端仓库体积较大；后续若频繁更新大文件，建议改用 Git LFS 或外部数据/权重下载说明。
 - `README.md` 仍使用通用 `pip` / `python` 示例，与本项目维护规则中的 `.venv` 优先策略不完全一致。
 
 ## Architecture Decisions
 
 - 保留 `CRWU/` 原始数据作为当前可复现实验输入，不在 `.gitignore` 中忽略 `.mat` 文件。
-- 保留 `results/figs/` 的小型结果图片，但忽略 `results/ckpts/` 和 `results/logs/` 等可再生成运行态产物。
+- 当前按用户要求将 `results/ckpts/` 和 `results/logs/` 强制纳入 Git，用于通过 `git pull` 同步完整实验产物。
 - 初版提交阶段不改动模型和训练逻辑，先建立清晰的版本边界与项目状态记录。
